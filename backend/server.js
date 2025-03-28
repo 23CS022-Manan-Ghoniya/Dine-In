@@ -6,16 +6,24 @@ const nodemailer = require('nodemailer');
 const app = express();
 const port = 3000;
 
-app.use(cors()); // Enable CORS for all origins BEFORE defining routes
+// Enable CORS with specific options
+const corsOptions = {
+    origin: '*', // Or specify your customer app's origin if it's served from a specific URL
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true, // Allow cookies, authorization headers with HTTPS
+    allowedHeaders: 'Content-Type, Authorization'
+};
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 // --- Email Configuration ---
 // Replace these with your actual email service provider details
 const transporter = nodemailer.createTransport({
-    service: 'your_email_service_provider', // e.g., 'Gmail', 'Outlook'
+    service: 'Gmail', // e.g., 'Gmail', 'Outlook'
     auth: {
-        user: 'your_email@example.com',
-        pass: 'your_email_password'
+        user: 'onethat326@gmail.com',
+        pass: '20thOct.'
     }
 });
 
