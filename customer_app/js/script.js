@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
         tableNumberSpan.textContent = 'N/A';
     }
 
-    // Sample menu data (same as before)
+    // Sample menu data
     const menuItemsData = [
         { id: 1, name: "Dal Tadka", category: "Main Course", price: 120 },
         { id: 2, name: "Paneer Butter Masala", category: "Main Course", price: 180 },
@@ -117,8 +117,91 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // ... (rest of the JavaScript for payment modal remains the same) ...
+    // Event listener for viewing the bill
+    viewBillBtn.addEventListener('click', function() {
+        paymentModal.style.display = 'block';
+        onlinePaymentInfo.style.display = 'none';
+        billSentMessage.style.display = 'none';
+        phoneNumberInput.value = ''; // Clear previous input
+        console.log("Simulated order for admin:", cart); // Log the cart for now
+
+        // --- The following lines are crucial for the simulation ---
+        const table = getTableNumber();
+        const orderToSend = cart.map(item => ({ id: item.id }));
+        if (window.opener && !window.opener.closed && typeof window.opener.receiveCustomerOrder === 'function') {
+            window.opener.receiveCustomerOrder(table, orderToSend);
+            console.log(`(Simulated send to popup) Order for Table ${table}:`, orderToSend);
+        } else {
+            window.postMessage({ type: 'newOrder', tableNumber: table, order: orderToSend }, '*');
+            console.log(`(Simulated send via message) Order for Table ${table}:`, orderToSend);
+        }
+    });
+
+    // Event listener for closing the modal
+    closeButton.addEventListener('click', function() {
+        paymentModal.style.display = 'none';
+    });
+
+    // Event listener for paying by card/UPI
+    cardBtn.addEventListener('click', function() {
+        onlinePaymentInfo.style.display = 'block';
+    });
+
+    // Event listener for proceeding to online payment (conceptual)
+    payOnlineBtn.addEventListener('click', function() {
+        const phoneNumber = phoneNumberInput.value;
+        if (phoneNumber) {
+            alert(`Initiating online payment for ₹${cartTotal} (conceptual).\nPhone number: ${phoneNumber}`);
+            // In a real application, you would redirect to a payment gateway here.
+            // Steps for UPI integration would involve:
+            // 1. Choosing a Payment Gateway that supports UPI (e.g., Razorpay, PayU).
+            // 2. Setting up an account with the gateway and obtaining API keys.
+            // 3. Using their SDK or APIs to initiate a payment request with the total amount.
+            // 4. Handling the payment response (success, failure, etc.).
+            // 5. You might need server-side logic to securely handle transactions.
+        } else {
+            alert('Please enter your phone number to proceed with online payment.');
+        }
+    });
+
+    // Event listener for paying by cash (conceptual WhatsApp bill)
+    cashBtn.addEventListener('click', function() {
+        const phoneNumber = phoneNumberInput.value;
+        if (phoneNumber) {
+            alert(`Cash payment selected. A copy of the bill will be sent to ${phoneNumber} via WhatsApp (conceptual).`);
+            billSentMessage.style.display = 'block';
+            // Conceptual WhatsApp Integration:
+            // 1. WhatsApp does not have a direct API for sending messages from a web app for free.
+            // 2. Businesses often use the WhatsApp Business API, which can involve costs and a more complex setup.
+            // 3. For a simple academic project, you could:
+            //    - Log the bill details and phone number for manual sending.
+            //    - Explore third-party services that might offer limited free WhatsApp messaging capabilities (use with caution regarding privacy and terms of service).
+            //    - The actual integration would likely involve server-side code to interact with such APIs.
+        } else {
+            alert('Please enter your phone number to send the bill via WhatsApp (conceptual).');
+        }
+    });
+
+    // Close modal if user clicks outside
+    window.addEventListener('click', function(event) {
+        if (event.target == paymentModal) {
+            paymentModal.style.display = 'none';
+        }
+    });
 
     displayMenu();
     updateCartDisplay(); // Initial call to display empty cart
+
+    // Basic simulation of sending order to admin (for testing in separate windows)
+    // (This part was already included in the isolated snippet, but ensuring it's here)
+    let adminWindow = window.open('../admin_app/index.html', 'adminWindow');
+    window.openAdminWindow = adminWindow;
+    window.addEventListener('message', function(event) {
+        if (event.data && event.data.type === 'adminReady' && adminWindow && !adminWindow.closed) {
+            const table = getTableNumber();
+            const orderToSend = cart.map(item => ({ id: item.id }));
+            adminWindow.postMessage({ type: 'newOrder', tableNumber: table, order: orderToSend }, '*');
+            console.log(`(Simulated send via message) Order for Table ${table}:`, orderToSend);
+        }
+    });
 });
