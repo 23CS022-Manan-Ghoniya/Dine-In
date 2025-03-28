@@ -125,9 +125,8 @@ document.addEventListener('DOMContentLoaded', function() {
         phoneNumberInput.value = ''; // Clear previous input
         console.log("Simulated order for admin:", cart); // Log the cart for now
 
-        // --- The following lines are crucial for the simulation ---
         const table = getTableNumber();
-        const orderToSend = cart.map(item => ({ id: item.id }));
+        const orderToSend = cart.map(item => ({ id: item.id, name: item.name, price: item.price }));
         if (window.opener && !window.opener.closed && typeof window.opener.receiveCustomerOrder === 'function') {
             window.opener.receiveCustomerOrder(table, orderToSend);
             console.log(`(Simulated send to popup) Order for Table ${table}:`, orderToSend);
@@ -153,32 +152,41 @@ document.addEventListener('DOMContentLoaded', function() {
         if (phoneNumber) {
             alert(`Initiating online payment for ₹${cartTotal} (conceptual).\nPhone number: ${phoneNumber}`);
             // In a real application, you would redirect to a payment gateway here.
-            // Steps for UPI integration would involve:
-            // 1. Choosing a Payment Gateway that supports UPI (e.g., Razorpay, PayU).
-            // 2. Setting up an account with the gateway and obtaining API keys.
-            // 3. Using their SDK or APIs to initiate a payment request with the total amount.
-            // 4. Handling the payment response (success, failure, etc.).
-            // 5. You might need server-side logic to securely handle transactions.
         } else {
             alert('Please enter your phone number to proceed with online payment.');
         }
     });
 
-    // Event listener for paying by cash (conceptual WhatsApp bill)
+    // Event listener for paying by cash (send order to backend with phone number)
+    // Event listener for paying by cash (send order to backend with phone number and email)
     cashBtn.addEventListener('click', function() {
         const phoneNumber = phoneNumberInput.value;
-        if (phoneNumber) {
-            alert(`Cash payment selected. A copy of the bill will be sent to ${phoneNumber} via WhatsApp (conceptual).`);
-            billSentMessage.style.display = 'block';
-            // Conceptual WhatsApp Integration:
-            // 1. WhatsApp does not have a direct API for sending messages from a web app for free.
-            // 2. Businesses often use the WhatsApp Business API, which can involve costs and a more complex setup.
-            // 3. For a simple academic project, you could:
-            //    - Log the bill details and phone number for manual sending.
-            //    - Explore third-party services that might offer limited free WhatsApp messaging capabilities (use with caution regarding privacy and terms of service).
-            //    - The actual integration would likely involve server-side code to interact with such APIs.
+        const emailAddress = document.getElementById('email-address').value; // Get the email address
+        if (phoneNumber && emailAddress) {
+            const tableNumber = getTableNumber();
+            const orderToSend = cart.map(item => ({ id: item.id, name: item.name, price: item.price }));
+
+            fetch('http://localhost:3000/api/orders', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ tableNumber: tableNumber, order: orderToSend, phoneNumber: phoneNumber, email: emailAddress }) // Send the email
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                alert(`Cash payment selected. Order submitted and bill sent to ${emailAddress}! (Backend says: ${data.message})`);
+                billSentMessage.style.display = 'block';
+                cart = [];
+                updateCartDisplay();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('There was an error submitting your order. Please try again.');
+            });
         } else {
-            alert('Please enter your phone number to send the bill via WhatsApp (conceptual).');
+            alert('Please enter both your phone number and email address to submit your order.');
         }
     });
 
@@ -190,10 +198,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     displayMenu();
-    updateCartDisplay(); // Initial call to display empty cart
+    updateCartDisplay();
 
-    // Basic simulation of sending order to admin (for testing in separate windows)
-    // (This part was already included in the isolated snippet, but ensuring it's here)
     let adminWindow = window.open('../admin_app/index.html', 'adminWindow');
     window.openAdminWindow = adminWindow;
     window.addEventListener('message', function(event) {

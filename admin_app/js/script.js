@@ -39,17 +39,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Handle Generate Bill button click
     generateBillBtn.addEventListener('click', function() {
         const selectedTable = tableSelector.value;
-        if (selectedTable) {
-            // In a real scenario, you would fetch the order for this table from a database
-            // For this simulation, we'll use a placeholder or assume we have some way to know the order
-
-            // **SIMULATED ORDER DATA - Replace with actual logic if you had a backend**
-            const simulatedOrderForTable = currentOrders[selectedTable] || [
-                { id: 1, quantity: 1 }, // Example: Table ordered 1 Dal Tadka
-                { id: 3, quantity: 2 }  // Example: Table ordered 2 Vegetable Biryani
-            ];
-
-            displayBill(selectedTable, simulatedOrderForTable);
+        if (selectedTable && currentOrders[selectedTable]) { // Check if there's an order for the selected table
+            displayBill(selectedTable, currentOrders[selectedTable]);
+        } else {
+            billTableNumber.textContent = selectedTable || 'N/A';
+            billItemsList.innerHTML = '<li>No order found for this table.</li>';
+            billTotalAmount.textContent = '0';
+            billDisplay.style.display = 'block';
         }
     });
 
@@ -61,9 +57,9 @@ document.addEventListener('DOMContentLoaded', function() {
         orderItems.forEach(orderItem => {
             const menuItem = menuForBilling.find(item => item.id === orderItem.id);
             if (menuItem) {
-                const itemTotal = menuItem.price * orderItem.quantity;
+                const itemTotal = menuItem.price * (orderItem.quantity || 1); // Default quantity to 1 if not provided
                 const listItem = document.createElement('li');
-                listItem.textContent = `${menuItem.name} (x${orderItem.quantity}) - ₹${itemTotal}`;
+                listItem.textContent = `${menuItem.name} (x${orderItem.quantity || 1}) - ₹${itemTotal}`;
                 billItemsList.appendChild(listItem);
                 total += itemTotal;
             }
@@ -83,30 +79,31 @@ document.addEventListener('DOMContentLoaded', function() {
             const menuItem = menuForBilling.find(m => m.id === item.id);
             if (menuItem) {
                 const detailItem = document.createElement('li');
-                detailItem.textContent = `${menuItem.name} (x${item.quantity})`;
+                detailItem.textContent = `${menuItem.name} (x${item.quantity || 1})`;
                 orderDetails.appendChild(detailItem);
             }
         });
         listItem.appendChild(orderDetails);
         newOrdersList.appendChild(listItem);
-        // Optionally, clear the "No new orders yet" message
         if (newOrdersList.children[0] && newOrdersList.children[0].textContent === 'No new orders yet.') {
             newOrdersList.innerHTML = '';
         }
     }
 
-    // **SIMULATE A NEW ORDER ARRIVING (for testing)**
-    // In a real app, this would be triggered by a server event
-    setTimeout(() => {
-        receiveNewOrder('3', [{ id: 2, quantity: 1 }, { id: 6, quantity: 2 }]);
-    }, 3000); // Simulate an order after 3 seconds
+    // Listen for messages from the customer app
+    window.addEventListener('message', function(event) {
+        if (event.data && event.data.type === 'newOrder') {
+            const { tableNumber, order } = event.data;
+            receiveNewOrder(tableNumber, order);
+        } else if (event.source && event.origin === window.location.origin) {
+            event.source.postMessage({ type: 'adminReady' }, event.origin);
+        }
+    });
+
+    // Expose the receiveNewOrder function globally
+    window.receiveCustomerOrder = receiveNewOrder;
 
     // Initial state: disable Generate Bill button
     generateBillBtn.disabled = true;
-
-    // Let's try to simulate sending the cart data to the admin when "View Bill & Pay" is clicked on the customer side
-    window.receiveCustomerOrder = function(tableNumber, orderData) {
-        receiveNewOrder(tableNumber, orderData.map(item => ({ id: item.id, quantity: 1 })));
-    };
 
 });
