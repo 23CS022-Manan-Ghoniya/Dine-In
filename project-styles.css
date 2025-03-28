@@ -86,3 +86,44 @@ img {
         width: 70px;
     }
 }
+
+/* style.css (example) */
+
+/* Admin container styling */
+.admin-container {
+    padding: 20px;
+    margin: 20px;
+  }
+  
+  /* Admin table styling */
+  .admin-orders-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .admin-orders-table th,
+  .admin-orders-table td {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+  }
+  
+  .admin-orders-table th {
+    background-color: #f4f4f4;
+  }
+  
+  /* Example navbar styles (if you haven't already) */
+  .navbar {
+    background: #333;
+    padding: 10px;
+  }
+  
+  .navbar a {
+    color: #fff;
+    margin-right: 10px;
+    text-decoration: none;
+  }
+  
+  .navbar a.active {
+    font-weight: bold;
+  }
+  
