@@ -1,0 +1,88 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f8ff;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    background-image: url(images/background.png);
+    background-size: cover;
+}
+
+.container {
+    text-align: center;
+    background: #dad1c6;
+    height: 280px;
+    width: 600px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 2s ease-in-out;
+}
+
+.welcome-message {
+    margin-top: 7px;
+    text-align: center;
+    font-size: 2.5em;
+    color: #c60215;
+}
+
+img {
+    margin-top: 12px;
+    margin-bottom: 0px;
+    height: 90px;
+    width: 90px;
+}
+
+.explore-button {
+    margin-top: 5px;
+    height: 55px;
+    width: 120px;
+    font-size: 18px;
+    color: #fff;
+    background-color: red;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 2ms ease;
+    box-shadow: 0px 0px 6px rgb(0, 0, 0);
+}
+
+.explore-button:hover {
+    transition: 0.3s;
+    transform: translateY(-4px);
+    border-color: #333;
+}
+
+.explore-button:active {
+    background-color: #bb3302e1;
+}
+
+
+@media only screen and (max-width: 600px) {
+    .container {
+        width: 90%;
+        height: auto;
+        padding: 20px;
+    }
+
+    .welcome-message {
+        font-size: 1.8em;
+        margin-top: 10px;
+    }
+
+    .explore-button {
+        width: 100px;
+        height: 45px;
+        font-size: 16px;
+        margin-top: 15px;
+    }
+
+    img {
+        height: 70px;
+        width: 70px;
+    }
+}

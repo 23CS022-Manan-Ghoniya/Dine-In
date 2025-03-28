@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breakfast</title>
+    <link rel="stylesheet" href="breakfast.css">
+    <script src="https://kit.fontawesome.com/01da381823.js" crossorigin="anonymous"></script>
+</head>
+
+    <!-- Header Section -->
+    <header id="header">
+        <div class="container">
+            <nav class="main-nav">
+                <div class="logo-container">
+                    <img src="images/menulogo.png" class="logo" alt="Menu Logo">
+                    <h1>Menu</h1>
+                </div>
+                <ul class="icons">
+                   
+                    <li><i class="fa-solid fa-bell" title="Notifications"></i></li>
+                   <a href="cart.html"> <li><i class="fa-solid fa-cart-shopping" title="Cart"></i></li></a>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="barmobile">
+        <div class="search-barmobile">
+            <input type="text" placeholder="Search...">
+           <div class="search"> <button><i class="fa-solid fa-magnifying-glass"></i></button></div>
+        </div>
+    </div>
+<h2 id="cold">Cold Drinks</h2>
+    <div class="menu-container">
+        
+
+        <div class="menu-item">
+            <span class="item-name">Coke</span>
+            <span class="item-price">₹40.00</span>
+            <button class="add-btn"data-name="Coke" data-price="40">Add +</button>
+        </div>
+
+        <div class="menu-item">
+            <span class="item-name">Diet Coke</span>
+            <span class="item-price">₹50.00</span>
+            <button class="add-btn"data-name="Diet Coke" data-price="50">Add +</button>
+        </div>
+
+        <div class="menu-item">
+            <span class="item-name">Water</span>
+            <span class="item-price">₹10.00</span>
+            <button class="add-btn"data-name="Water" data-price="10">Add +</button>
+        </div>
+
+        <div class="menu-item">
+            <span class="item-name">Cold Milk</span>
+            <span class="item-price">₹25.00</span>
+            <button class="add-btn"data-name="Cold Milk" data-price="25">Add +</button>
+        </div>
+
+        <div class="menu-item">
+            <span class="item-name">Butter Milk</span>
+            <span class="item-price">₹12.00</span>
+            <button class="add-btn"data-name="Butter Milk" data-price="12">Add +</button>
+        </div>
+
+        <div class="menu-item">
+            <span class="item-name">Frooti</span>
+            <span class="item-price">₹20.00</span>
+            <button class="add-btn"data-name="Frooti" data-price="20">Add +</button>
+        </div>
+        <div class="menu-item">
+            <span class="item-name">Sprite</span>
+            <span class="item-price">₹20.00</span>
+            <button class="add-btn"data-name="Sprite" data-price="20">Add +</button>
+        </div>
+        <div class="menu-item">
+            <span class="item-name">Fenta</span>
+            <span class="item-price">₹20.00</span>
+            <button class="add-btn"data-name="Fenta" data-price="20">Add +</button>
+        </div>
+        <div class="menu-item">
+            <span class="item-name">Bornvita</span>
+            <span class="item-price">₹40.00</span>
+            <button class="add-btn"data-name="Bornvita" data-price="40">Add +</button>
+        </div>
+        
+        
+    </div>
+    <footer>
+        <p>&copy; 2024 Menu App. All rights reserved.</p>
+    </footer>
+</body>
+    
+    <script>
+        // Function to add item to cart
+        function addToCart(itemName, itemPrice) {
+          // Get the current cart from local storage or initialize a new array
+          let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      
+          // Create an item object
+          let item = {
+            name: itemName,
+            price: itemPrice
+          };
+      
+          // Add the item to the cart
+          cart.push(item);
+      
+          // Save the updated cart back to local storage
+          localStorage.setItem('cart', JSON.stringify(cart));
+      
+          // Provide feedback to the user
+          alert(itemName + ' has been added to your cart!');
+        }
+      
+        // Add event listeners to all add buttons
+        document.querySelectorAll('.add-btn').forEach(button => {
+          button.addEventListener('click', () => {
+            // Get item details from data attributes
+            let itemName = button.getAttribute('data-name');
+            let itemPrice = button.getAttribute('data-price');
+            addToCart(itemName, itemPrice);
+          });
+        });
+      </script>
+      
+
+</html>

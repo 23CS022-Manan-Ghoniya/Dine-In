@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart</title>
+  <link rel="stylesheet" href="cart.css">
+   <script src="https://kit.fontawesome.com/01da381823.js" crossorigin="anonymous"></script>
+</head>
+
+    <!-- Header Section -->
+    <header id="header">
+        <div class="container">
+            <nav class="main-nav">
+                <div class="logo-container">
+                    <img src="images/menulogo.png" class="logo" alt="Menu Logo">
+                    <h1>Menu</h1>
+                </div>
+                <ul class="icons">
+                   
+                    <li><i class="fa-solid fa-bell" title="Notifications"></i></li>
+                   <a href="cart.html"> <li><i class="fa-solid fa-cart-shopping" title="Cart"></i></li></a>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="barmobile">
+        <div class="search-barmobile">
+            <input type="text" placeholder="Search...">
+           <div class="search"> <button><i class="fa-solid fa-magnifying-glass"></i></button></div>
+        </div>
+    </div>
+
+<body>
+  <h1>Your Cart</h1><br><br>
+  <div class="cart-container">
+    <ul id="cart-items"></ul>
+    <button class="clear-btn" onclick="clearCart()">Clear Cart</button>
+    <button class="order-btn" onclick="placeOrder()">Place Order</button>
+  </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 Dine-in. All rights reserved.</p>
+    </footer>
+
+
+  <script>
+    // Function to display cart items
+    function displayCart() {
+      // Get the cart from local storage
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      let cartItemsContainer = document.getElementById('cart-items');
+
+      // Clear the cart items container
+      cartItemsContainer.innerHTML = '';
+
+      // Check if the cart is empty
+      if (cart.length === 0) {
+        cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
+        return;
+      }
+
+      // Create and display cart items
+      cart.forEach((item, index) => {
+        // Ensure item quantity is at least 1 and prevent undefined values
+        if (!item.quantity || item.quantity < 1) item.quantity = 1;
+
+        let cartItem = document.createElement('li');
+        cartItem.classList.add('cart-item');
+        cartItem.innerHTML = `
+          <span class="item-name">${item.name || 'Unnamed Item'}</span>
+          <span class="item-price">₹${item.price || '0.00'}</span>
+          <span class="item-quantity">Quantity: ${item.quantity}</span>
+          <button class="delete-btn" onclick="deleteItem(${index})">Delete</button>
+          <button class="increase-btn" onclick="increaseQuantity(${index})">+</button>
+        `;
+        cartItemsContainer.appendChild(cartItem);
+      });
+    }
+
+    // Function to delete an item from the cart
+    function deleteItem(index) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.splice(index, 1); // Remove the item at the specified index
+      localStorage.setItem('cart', JSON.stringify(cart)); // Update the cart in local storage
+      displayCart(); // Refresh the cart display
+    }
+
+    // Function to increase the quantity of an item
+    function increaseQuantity(index) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart[index].quantity += 1; // Increase the quantity of the item
+      localStorage.setItem('cart', JSON.stringify(cart)); // Update the cart in local storage
+      displayCart(); // Refresh the cart display
+    }
+
+    // Function to clear the cart
+    function clearCart() {
+      localStorage.removeItem('cart');
+      displayCart();
+    }
+
+    function placeOrder() {
+  // Get the cart items from local storage
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+  // Save the cart items to localStorage with a key that can be accessed in chef.html
+  localStorage.setItem('orderDetails', JSON.stringify(cart));
+
+  
+}
+    // Call the function to display cart items
+    displayCart();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breakfast</title>
+    <link rel="stylesheet" href="breakfast.css">
+    <script src="https://kit.fontawesome.com/01da381823.js" crossorigin="anonymous"></script>
+</head>
+
+    <!-- Header Section -->
+    <header id="header">
+        <div class="container">
+            <nav class="main-nav">
+                <div class="logo-container">
+                    <img src="images/menulogo.png" class="logo" alt="Menu Logo">
+                    <h1>Menu</h1>
+                </div>
+                <ul class="icons">
+                   
+                    <li><i class="fa-solid fa-bell" title="Notifications"></i></li>
+                   <a href="cart.html"> <li><i class="fa-solid fa-cart-shopping" title="Cart"></i></li></a>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="barmobile">
+        <div class="search-barmobile">
+            <input type="text" placeholder="Search...">
+           <div class="search"> <button><i class="fa-solid fa-magnifying-glass"></i></button></div>
+        </div>
+    </div>
+    <h2 id="lunch">Lunch</h2>
+    <div class="menu-container">
+        
+
+        <div class="menu-item">
+            <span class="item-name">Punjabi Thali</span>
+            <span class="item-price">₹150.00</span>
+            <button class="add-btn"data-name="Punjabi Thali" data-price="150">Add +</button>
+        </div>
+
+        <div class="menu-item">
+            <span class="item-name">Butter Milk</span>
+            <span class="item-price">₹12.00</span>
+            <button class="add-btn"data-name="Butter Milk" data-price="12">Add +</button>
+        </div>
+
+        <div class="menu-item">
+            <span class="item-name">Rosted Papad</span>
+            <span class="item-price">₹8.00</span>
+            <button class="add-btn"data-name="Rosted Papad" data-price="8">Add +</button>
+        </div>
+
+        <div class="menu-item">
+            <span class="item-name">Gujarati Thali</span>
+            <span class="item-price">₹100.00</span>
+            <button class="add-btn"data-name="Gujarati Thali" data-price="100">Add +</button>
+        </div>
+
+        <div class="menu-item">
+            <span class="item-name">Bhindi Masala</span>
+            <span class="item-price">₹25.00</span>
+            <button class="add-btn"data-name="Bhindi Masala" data-price="25">Add +</button>
+        </div>
+
+        <div class="menu-item">
+            <span class="item-name">Ghee Roti</span>
+            <span class="item-price">₹8.00</span>
+            <button class="add-btn"data-name="Ghee Roti" data-price="8">Add +</button>
+        </div>
+        <div class="menu-item">
+            <span class="item-name">Butter Roti</span>
+            <span class="item-price">₹10.00</span>
+            <button class="add-btn"data-name="Butter Roti" data-price="10">Add +</button>
+        </div>
+        <div class="menu-item">
+            <span class="item-name">Tandoori Roti</span>
+            <span class="item-price">₹15.00</span>
+            <button class="add-btn"data-name="Tandoori Roti" data-price="15">Add +</button>
+        </div>
+        <div class="menu-item">
+            <span class="item-name">Butter Tandoori Roti</span>
+            <span class="item-price">₹18.00</span>
+            <button class="add-btn"data-name="Butter Tandoori Roti" data-price="18">Add +</button>
+        </div>
+        <div class="menu-item">
+            <span class="item-name">Panner Tikka Masala</span>
+            <span class="item-price">₹250.00</span>
+            <button class="add-btn"data-name="Panner Tikka Masala" data-price="250">Add +</button>
+        </div>
+        <div class="menu-item">
+            <span class="item-name">Panner Butter Masala</span>
+            <span class="item-price">₹260.00</span>
+            <button class="add-btn"data-name="Panner Butter Masala" data-price="260">Add +</button>
+        </div>
+        <div class="menu-item">
+            <span class="item-name">Panner Toffani</span>
+            <span class="item-price">₹270.00</span>
+            <button class="add-btn"data-name="Panner Toffani" data-price="270">Add +</button>
+        </div>
+        <div class="menu-item">
+            <span class="item-name">Panner Angara</span>
+            <span class="item-price">₹250.00</span>
+            <button class="add-btn"data-name="Panner Angara" data-price="250">Add +</button>
+        </div>
+        <div class="menu-item">
+            <span class="item-name">Panner Patayala</span>
+            <span class="item-price">₹290.00</span>
+            <button class="add-btn"data-name="Panner Patayala" data-price="290">Add +</button>
+        </div>
+        <div class="menu-item">
+            <span class="item-name">Jeera Rice</span>
+            <span class="item-price">₹100.00</span>
+            <button class="add-btn"data-name="Jeera Rice" data-price="100">Add +</button>
+        </div>
+        <div class="menu-item">
+            <span class="item-name">Dal Fry</span>
+            <span class="item-price">₹120.00</span>
+            <button class="add-btn"data-name="Dal Fry" data-price="120">Add +</button>
+        </div>
+        <div class="menu-item">
+            <span class="item-name">Veg Pulao</span>
+            <span class="item-price">₹110.00</span>
+            <button class="add-btn"data-name="Veg Pulao" data-price="110">Add +</button>
+        </div>
+    </div>
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 Dine-in. All rights reserved.</p>
+    </footer>
+
+</body>
+<script>
+    // Function to add item to cart
+    function addToCart(itemName, itemPrice) {
+      // Get the current cart from local storage or initialize a new array
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  
+      // Create an item object
+      let item = {
+        name: itemName,
+        price: itemPrice
+      };
+  
+      // Add the item to the cart
+      cart.push(item);
+  
+      // Save the updated cart back to local storage
+      localStorage.setItem('cart', JSON.stringify(cart));
+  
+      // Provide feedback to the user
+      alert(itemName + ' has been added to your cart!');
+    }
+  
+    // Add event listeners to all add buttons
+    document.querySelectorAll('.add-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        // Get item details from data attributes
+        let itemName = button.getAttribute('data-name');
+        let itemPrice = button.getAttribute('data-price');
+        addToCart(itemName, itemPrice);
+      });
+    });
+  </script>
+  
+</html>
