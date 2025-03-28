@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Vegetarian Restaurant</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Welcome!</h1>
+            <p>You are at Table: <span id="table-number"></span></p>
+        </header>
+
+        <section id="menu">
+            <h2>Our Menu</h2>
+            <div class="menu-items">
+                </div>
+        </section>
+
+        <section id="order">
+            <h2>Your Order</h2>
+            <ul id="order-list">
+                <li>Your order will appear here</li>
+            </ul>
+            <p>Total: ₹<span id="order-total">0</span></p>
+            <button id="view-bill-btn" disabled>View Bill & Pay</button>
+        </section>
+
+        <div id="payment-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2>Payment Options</h2>
+                <label for="phone-number">Your Phone Number:</label>
+                <input type="tel" id="phone-number" placeholder="Enter your number">
+                <div id="payment-choices">
+                    <button id="cash-btn">Pay by Cash</button>
+                    <button id="card-btn">Pay by Card/UPI</button>
+                </div>
+                <div id="online-payment-info" style="display:none;">
+                    <p>You will be redirected to a secure payment gateway.</p>
+                    <p>(Conceptual UPI Integration steps would be outlined here)</p>
+                    <button id="pay-online-btn">Proceed to Pay</button>
+                </div>
+                <p id="bill-sent-message" style="display:none;">Bill sent via WhatsApp!</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
